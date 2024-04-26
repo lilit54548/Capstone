@@ -1,0 +1,10 @@
+venv 
+**.DS_store
+# Ignore compiled Python files
+*.pyc
+
+# Ignore compiled Java files
+*.class
+
+# Ignore cache directories
+.cache/
