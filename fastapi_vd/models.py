@@ -14,6 +14,13 @@ class Bandit(Base):
     beta = Column(Float, default=1.0)
     n = Column(Integer, default=0)
 
+    
+    def __repr__(self):
+        return f"<Bandit(Bandit_name={self.Bandit_name}, alpha={self.alpha}, beta={self.beta}, n={self.n})>"
+
+       
+
+
 class UserEvent(Base):
     __tablename__ = "user_events"
 

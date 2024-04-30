@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class BanditBase(BaseModel):
-    Bandit_name: str
+    Bandit_name: int
 
 class BanditCreate(BanditBase):
     alpha: float = 1.0
@@ -18,7 +18,7 @@ class Bandit(BanditBase):
         from_attributes = True
 
 class UserEventBase(BaseModel):
-    Bandit_name: str
+    Bandit_name: int
     event: int
 
 class UserEventCreate(UserEventBase):
