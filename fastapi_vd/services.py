@@ -79,7 +79,7 @@ def create_user_event(db: Session, event: schemas.UserEventCreate):
 # can be found in the database for each bandit name from 1 to n.  
 
 # """
-def initialize_bandits(db: Session, n: int):
+def initialize_bandits(db: Session, n:int = 5):
     """
     Initialize a specified number of bandits in the database with default parameters.
 
@@ -146,48 +146,50 @@ def get_UserEvent(db: Session, limit: int):
 
 
 
+def beta_sampling(alpha, beta):
 
-def sample(db: Session):
+    return np.random.beta(alpha, beta)
+     
+
+
+
+# def choose_bandit(db: Session):
+#     # Query to fetch all Bandit records from the database
+#     bandits = db.query(models.Bandit).all()
+#     print( bandits)
+
+#     # Check if the list is not empty
+#     if bandits:
+#         # For demonstration, let's take the first Bandit from the list
+#         samples = [beta_sampling(i.alpha, i.beta) for i in bandits]
+#         chosen_bandit = bandits[np.argmax(samples)]
+#         # Now use the alpha and beta attributes of the Bandit instance to generate a sample
+#         # return np.random.beta(bandit.alpha, bandit.beta)
+#         print(f"Chosen Bandit is {chosen_bandit}")
+#         print(f"Type of chosen_bandit: {type(chosen_bandit)}")
+#     else:
+#         # Handle the case where no bandits are available
+#         return chosen_bandit
+
+
+def choose_bandit(db: Session):
     # Query to fetch all Bandit records from the database
     bandits = db.query(models.Bandit).all()
-    print(type(bandits), bandits)
+    print(bandits)
 
     # Check if the list is not empty
     if bandits:
         # For demonstration, let's take the first Bandit from the list
-        bandit = bandits[0]
-
-        # Now use the alpha and beta attributes of the Bandit instance to generate a sample
-        return np.random.beta(bandit.alpha, bandit.beta)
+        samples = [beta_sampling(i.alpha, i.beta) for i in bandits]
+        chosen_bandit = bandits[np.argmax(samples)]
+        print(f"Chosen Bandit is {chosen_bandit}")
+        print(f"Type of chosen_bandit: {type(chosen_bandit)}")
+        return chosen_bandit
     else:
         # Handle the case where no bandits are available
+        print("No bandits available.")
         return None
 
-
-
-
-def choose_bandit(db: Session):
-    """
-    Select a bandit based on Thompson Sampling.
-
-    Args:
-        db (Session): The SQLAlchemy session used to interact with the database.
-
-    Returns:
-        The selected Bandit object after performing Thompson Sampling.
-    """
-    # Retrieve all bandit records from the database
-    bandits = db.query(models.Bandit).all()
-    
-    # Thompson Sampling: sample from the posterior distribution of each bandit and select the one with the highest sample
-    samples = [sample(db) for bandit in bandits]  # Corrected variable name
-    chosen_bandit = bandits[np.argmax(samples)]
-
-    # Print all bandits and the chosen one for debugging purposes
-    print("All bandits:", samples)
-    print("Chosen bandit:", chosen_bandit.Bandit_name)
-
-    return chosen_bandit
 
 
 def log_user_event(db: Session, Bandit_name: int, liked: bool):
@@ -203,8 +205,10 @@ def log_user_event(db: Session, Bandit_name: int, liked: bool):
 def update_bandit_performance(db: Session, Bandit_name: int, liked: bool):
     bandit = db.query(models.Bandit).filter_by(Bandit_name=Bandit_name).first()
     if bandit:
-        bandit.alpha += 1 if liked else 0
-        bandit.beta += 0 if liked else 1
+        if liked:
+            bandit.alpha += 1 
+        else:
+            bandit.beta += 1
         bandit.n += 1
         db.commit()
 
@@ -291,11 +295,11 @@ def get_bandit_parameters(db: Session):
 #         db.close()
         
 
-# if __name__ == "__main__":
-#     # Create a session instance
-#     db = database.SessionLocal()
-#     try:
-#         chosen_bandit = choose_bandit(db)
-#     finally:
-#         db.close()
+if __name__ == "__main__":
+    # Create a session instance
+    db = database.SessionLocal()
+    try:
+        chosen_bandit = choose_bandit(db)
+    finally:
+        db.close()
 

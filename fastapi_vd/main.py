@@ -31,6 +31,12 @@ import io
 app = fastapi.FastAPI(title="Bandit Management API")
 
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Bandit Management API"}
+
+
+
 @app.post("/api/bandits/", response_model=schemas.Bandit)
 async def create_bandit(bandit: schemas.BanditCreate, db: orm.Session = fastapi.Depends(services.get_db)):
     # Ensure all internal handling of Bandit_name now expects an integer
@@ -94,44 +100,46 @@ def initialize_bandits_api(n: int, db: Session = fastapi.Depends(services.get_db
     services.initialize_bandits(db, n)
     return {"message": f"{n} bandits initialized successfully."}
 
-# Define the startup event handler
-@app.on_event("startup")
-async def startup_event():
-    # Create a database session
-    db = SessionLocal()
-    try:
-        # Initialize bandits with a specified number (e.g., 10)
-        services.initialize_bandits(db, n=10)
-    finally:
-        # Close the database session
-        db.close()
+# # Define the startup event handler
+# @app.on_event("startup")
+# async def startup_event():
+#     # Create a database session
+#     db = SessionLocal()
+#     try:
+#         # Initialize bandits with a specified number (e.g., 10)
+#         services.initialize_bandits(db, n=10)
+#     finally:
+#         # Close the database session
+#         db.close()
 
 
-# Endpoint to suggest a bandit and interact with the user
 @app.post("/suggest_bandit/")
 async def suggest_bandit(feedback: str = Form(...), db: Session = fastapi.Depends(services.get_db)):
-    # Check if the bandits table is empty, and initialize it if needed
+    # Ensure there is at least one bandit in the database
     if not db.query(models.Bandit).first():
         services.initialize_bandits(db)
         return {"message": "Bandits table initialized. You can now provide feedback."}
-    
-    # Choose a bandit using Thompson Sampling algorithm
+
+    # Choose a bandit using the choose_bandit function
     bandit = services.choose_bandit(db)
-    print(bandit)
+    if bandit is None:
+        return {"message": "No available bandit to choose from."}
     
-    # Parse user feedback
+    # Process feedback
     feedback_lower = feedback.lower()
     if feedback_lower not in ["yes", "no"]:
         return {"message": "Invalid input. Please enter either 'yes' or 'no'."}
     
-    liked = feedback_lower == "yes"
+    # Assuming log_user_event and update_bandit_performance need feedback to be in specific format
+    feedback_int = 1 if feedback_lower == "yes" else 0
     
-    # Log user event and update bandit performance for both "yes" and "no" feedback
-    services.log_user_event(db, bandit.Bandit_name, liked)
-    services.update_bandit_performance(db, bandit.Bandit_name, liked)  # Update for "yes" feedback
-    services.update_bandit_performance(db, bandit.Bandit_name, not liked)  # Update for "no" feedback
-    
+    # Log the user event and update the bandit performance based on the feedback
+    services.log_user_event(db, bandit.Bandit_name, feedback_int)
+    services.update_bandit_performance(db, bandit.Bandit_name, feedback_int)
+
+    # Return a message with the chosen bandit and the feedback received
     return {"message": f"Chosen bandit: {bandit.Bandit_name}, Feedback: {feedback_lower}"}
+
 
 @app.get("/plot_bandits/")
 def plot_bandits(db: Session = fastapi.Depends(services.get_db)):
