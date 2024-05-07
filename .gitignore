@@ -8,3 +8,24 @@ venv
 
 # Ignore cache directories
 .cache/
+
+*postgres*
+
+*/temp/*postgres*
+*/log/*postgres*
+
+# Ignore hashed directories
+*/*[0-9a-f]{40}/
+
+# Ignore directories with hexadecimal names of varying lengths
+*/*[0-9a-f]+/
+# Specific path example
+/Capstone/pgadmin/*[0-9a-f]+/
+
+Karen Hovhannisyan, [7 May 2024 at 15:22:23]:
+# ignoring postress volume
+
+postgres_data/*
+!postgres_data/.gitadd
+pgadmin_data/*
+!pgadmin_data/.gitadd
