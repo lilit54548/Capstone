@@ -14,7 +14,9 @@ import numpy as np
 from database import DATABASE_URL,Base,get_db,engine
 from models import Project, Bandit
 from datetime import datetime 
+from models import _add_tables
 
+_add_tables()
 
 
 

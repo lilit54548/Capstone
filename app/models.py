@@ -52,4 +52,9 @@ if recreate:
     print('new schema us created')
 
     
-Base.metadata.create_all(bind=engine)   
+def _add_tables():
+    """_summary_
+    creating the above declared tables
+    """
+    Base.metadata.create_all(bind=engine) 
+
