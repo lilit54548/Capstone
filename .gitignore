@@ -22,7 +22,6 @@ venv
 # Specific path example
 /Capstone/pgadmin/*[0-9a-f]+/
 
-Karen Hovhannisyan, [7 May 2024 at 15:22:23]:
 # ignoring postress volume
 
 postgres_data/*
