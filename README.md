@@ -1,9 +1,9 @@
-# Customer Retention Analysis & Data Pipeline Development for "Global Credit" UCO CJSC
+# A/B testing Powered by Thompson Sampling
 
 
 ## Description
 
-This project aims to set up a Dockerized environment for PostgreSQL database, pgAdmin for database management, a model container, and an API container. It provides a convenient way to develop, deploy, and manage these components within a single Docker Compose configuration.
+This project is designed to create a Dockerized setup that includes a PostgreSQL database, pgAdmin for database administration, a model container, and an API container. It simplifies the development, deployment, and management of these elements through a unified Docker Compose setup.
 
 ## Prerequisites
 
@@ -18,20 +18,18 @@ Before getting started, ensure you have the following prerequisites installed:
    
    git clone <repository_url>
    
-2. Navigate to the survival_pipeline folder in the project directory:
+2. Navigate to the project directory:
    
-   cd <project_directory/survival_pipeline>
+   cd <project_directory>
    
 
-3. Build and start the Docker containers:
+3. Build and start the Docker containers(It can take up to 5 minutes to build the containers):
    
    docker-compose up --build
+
    
 
 ## Usage
 
-- Access pgAdmin for PostgreSQL management: [http://localhost:5050](http://localhost:5050)
-    - When running for the first time, you must create a server. Configure it as shown in the below image. 
-    ![Server Setup](docs/pgadmin_setup.png)
-- Access the API: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- Access modelling: [http://127.0.0.1:8888/lab](http://127.0.0.1:8888/lab)
+- Access pgAdmin for PostgreSQL management: [http://localhost:5050]
+- Access the API: [http://0.0.0.0:8000/docs]   
