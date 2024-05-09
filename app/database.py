@@ -3,6 +3,7 @@ import sqlalchemy.ext.declarative as  declarative
 import sqlalchemy.orm as orm
 from dotenv import load_dotenv
 import os
+from sqlalchemy.ext.asyncio import AsyncSession
 
 load_dotenv('.env')
 
