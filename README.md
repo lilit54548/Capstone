@@ -25,7 +25,11 @@ Before getting started, ensure you have the following prerequisites installed:
 
 3. Build and start the Docker containers(It can take up to 5 minutes to build the containers):
    
-   docker-compose up --build
+    
+```bash
+docker-compose build
+docker-compose up
+```
 
    
 
