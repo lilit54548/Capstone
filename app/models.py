@@ -51,10 +51,6 @@ if recreate:
     print('The Schema is deleted')
     print('new schema us created')
 
-    
-def _add_tables():
-    """_summary_
-    creating the above declared tables
-    """
-    Base.metadata.create_all(bind=engine) 
+   
+Base.metadata.create_all(bind=engine) 
 

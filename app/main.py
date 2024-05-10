@@ -14,26 +14,25 @@ import numpy as np
 from database import DATABASE_URL,Base,get_db,engine
 from models import Project, Bandit
 from datetime import datetime 
-from models import _add_tables
 import time
+from models import *
 
 
 
+# def try_until_no_error(max_attempts=10, delay_seconds=2):
+#     attempts = 0
+#     while attempts < max_attempts:
+#         try:
+#             _add_tables(engine)
+#             print("Function executed successfully!")
+#             return
+#         except Exception as e:
+#             attempts += 1
+#             print(f"Attempt {attempts}: An error occurred - {e}. Trying again after {delay_seconds} seconds...")
+#             time.sleep(delay_seconds)
+#     print("Maximum attempts reached. Function failed to execute without errors.")
 
-def try_until_no_error(max_attempts=6, delay_seconds=2):
-    attempts = 0
-    while attempts < max_attempts:
-        try:
-            _add_tables()
-            print("Function executed successfully!")
-            return
-        except Exception as e:
-            attempts += 1
-            print(f"Attempt {attempts}: An error occurred - {e}. Trying again after {delay_seconds} seconds...")
-            time.sleep(delay_seconds)
-    print("Maximum attempts reached. Function failed to execute without errors.")
-
-try_until_no_error()
+# try_until_no_error()
 
 from schemas import ( 
     ProjectInit,
