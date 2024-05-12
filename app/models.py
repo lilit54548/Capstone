@@ -10,6 +10,15 @@ from database import Base, engine
 
 
 class Project(Base):
+    """
+    Represents a project in the database.
+
+    Attributes:
+        project_id (int): Unique identifier for the project, automatically generated.
+        project_description (str): A brief description of the project.
+        bandits_qty (int): Quantity of bandits involved in the project.
+        start_date (datetime): The date and time when the project starts, set to the current time by default.
+    """
     __tablename__ = "projects"
     project_id = Column(Integer, primary_key=True, index=True)
     project_description = Column(String)
