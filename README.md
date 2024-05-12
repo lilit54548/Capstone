@@ -35,5 +35,15 @@ docker-compose up
 
 ## Usage
 
+When running for the first time, you must create a server. Configure it as shown in the below image (Password is blurred it should be password.)
+- Access the API: [http://0.0.0.0:8000/docs]
 - Access pgAdmin for PostgreSQL management: [http://localhost:5050]
-- Access the API: [http://0.0.0.0:8000/docs]   
+  username: admin@admin.com
+  password: admin
+
+  When running first time you should create a server.
+
+  Hostname: db
+  Maintenance database: ts_database
+  Username:postgres
+  Password: password
