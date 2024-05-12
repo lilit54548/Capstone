@@ -1,5 +1,5 @@
-site_name: MkDocs YouTube Tutorial
-site_url: https://james-willett.github.io/mkdocs-material-youtube-tutorial/
+site_name: A/b Testing with Thompson Sampling
+site_url: https://github.com/lilit54548/Capstone
 
 theme:
   name: material
@@ -36,6 +36,5 @@ plugins:
             - import sys
             - sys.path.append(".")
 
-# If you want to specify custom rendering options or other handler-specific settings:
           rendering:
             show_source: true
