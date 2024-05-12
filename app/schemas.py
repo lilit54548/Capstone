@@ -11,7 +11,7 @@ class ProjectInit(BaseModel):
     Attributes:
         project_description (str): A brief description of the project.
         bandits_qty (conint(gt=1)): The quantity of bandits involved in the project, must be greater than 1.
-    """
+  """
     project_description: str
     bandits_qty: conint(gt=1)
 
@@ -41,7 +41,7 @@ class BanditsInit(BaseModel):
 
     
 class UserEvent(BaseModel):
-    """
+   """
       Model representing an event triggered by a user in relation to a bandit within a project.
     
       Attributes:
@@ -54,14 +54,14 @@ class UserEvent(BaseModel):
     event: int
     
 class UpdatePriors(BaseModel):
-  """
+   """
     Model for updating the priors (alpha and beta) of a bandit based on new data.
     
     Attributes:
         alpha (float): Updated alpha value reflecting prior or accumulated knowledge of success.
         beta (float): Updated beta value reflecting prior or accumulated knowledge of failures.
         n (int): The number of additional trials or interactions since the last update.
-  """
+   """
     alpha: float  
     beta: float  
     n: int 
