@@ -1,5 +1,5 @@
-site_name: MkDocs YouTube Tutorial
-site_url: https://james-willett.github.io/mkdocs-material-youtube-tutorial/
+site_name: A/B testing with Thompson Sampling
+site_url: https://github.com/lilit54548/Capstone
 
 theme:
   name: material
