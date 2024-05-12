@@ -29,6 +29,18 @@ class Project(Base):
         return f"<Project(Project Id={self.project_id}, ProjectDescription={self.project_description}, NumberOfBandits={self.bandits_qty})>"
 
 class Bandit(Base):
+    """
+    Represents a bandit associated with a project in the database.
+    
+    Attributes:
+        id (int): The unique identifier for the bandit, automatically generated.
+        bandit_id (int): A unique bandit identifier within the scope of the project.
+        project_id (int): The identifier for the project this bandit is associated with.
+        alpha (float): The alpha parameter for the bandit's beta distribution, used in A/B testing scenarios.
+        beta (float): The beta parameter for the bandit's beta distribution, used in A/B testing scenarios.
+        n (int): The count of trials or interactions with the bandit.
+        updated_date (datetime): The last date and time the bandit's data was updated.
+    """
     __tablename__ = "bandits"
     id = Column(Integer, primary_key=True, index=True)
     bandit_id = Column(Integer, nullable=False)
@@ -42,6 +54,16 @@ class Bandit(Base):
         return f"<Bandit(Bandit Id={self.bandit_id}, Project Id={self.project_id}, Alpha={self.alpha}, Beta={self.beta}, N={self.n})>"
 
 class UserEvent(Base):
+    """
+    Represents an event triggered by a user within the context of a project, stored in the database.
+    
+    Attributes:
+        id (int): The unique identifier for the event, automatically generated.
+        project_id (int): The identifier for the project this event is associated with.
+        bandit_id (int): The identifier of the bandit associated with this event, if applicable.
+        event (int): An integer representing the type of event that occurred.
+        event_date (datetime): The date and time when the event occurred.
+    """
     __tablename__ = "user_events"
     id = Column(Integer, primary_key=True, index=True)
     project_id = Column(Integer, ForeignKey('projects.project_id'), nullable=False)
